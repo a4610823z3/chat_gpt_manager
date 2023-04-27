@@ -1,0 +1,23 @@
+/* Optional: Customize colors and styles */
+.title {
+    margin-bottom: 1.5rem;
+}
+
+table td:last-child {
+    white-space: nowrap;
+}
+
+@media screen and (max-width: 768px) {
+    table td:last-child {
+        width: 1%;
+    }
+}
+
+/* Optional: Center forms on mobile devices */
+.form-control {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 70vh;
+}
