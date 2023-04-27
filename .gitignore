@@ -1,0 +1,11 @@
+.*
+!.gitignore
+!.obelisk.yml
+!.obelisk
+!.dockerignore
+!.git/
+.vscode/
+env
+/**/*.png
+**/__pycache__
+*.tar.gz
