@@ -1,18 +1,28 @@
 from functools import lru_cache
 import hashlib
 import json
+import os
 
 key_cache = {}
+dir = os.environ.get('GPT_DATA_DIR')
+if str(dir) == '' or dir is None:
+   dir = './data/'
+user_path = str(dir) + "/users.json"
 
 @lru_cache(maxsize=10000)
 def get_user_data():
     try:
-        with open('../data/users.json', 'r') as f:
+        with open(user_path, 'r') as f:
              users = json.load(f)
     except (FileNotFoundError, json.JSONDecodeError):
         # 如果文件不存在或内容为空，返回空列表
         users = []
     return users
+
+def write_user_data(users):
+    with open(user_path, 'w') as f:
+        json.dump(users, f)
+
 
 
 def had_user_key(key):

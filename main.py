@@ -4,7 +4,7 @@ import uuid
 from flask import Flask, jsonify, request
 import json
 
-from api.support import get_user_data,clear_key_cache
+from api.support import get_user_data,clear_key_cache,write_user_data
 
 
 app = Flask(__name__, static_folder='static')
@@ -12,16 +12,14 @@ app = Flask(__name__, static_folder='static')
 # 从文件中读取用户数据并存储到 lru_cache 中（最多存储 128 条数据，过期时间为 300 秒）
 
 # 将用户数据写入文件中
-def write_user_data(users):
-    with open('users.json', 'w') as f:
-        json.dump(users, f)
-
 @app.before_request
 def before_request():
     authorization = request.headers.get('Authorization')
     if request.url.find("static") > 0:
         return
     value = os.environ.get('CHAT_GPT_MANGER_KEY')
+    if value is None:
+        return
     if value != '' and authorization != value:
         return {'error': '你输入秘钥或者输入的秘钥不正确'}, 200
 
@@ -101,8 +99,8 @@ def delete_user(user_id):
 
 if __name__ == '__main__':
     user_port = os.environ.get('GPT_PORT')
-    if user_port == '' :
+    if user_port == '' or user_port is None:
        app.run() # type: ignore
     else :
-       app.run(host='0.0.0.0',port = int(str(user_port))) # type: ignore
+       app.run(host='0.0.0.0',port = int(user_port)) # type: ignore
 
