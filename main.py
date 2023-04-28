@@ -100,9 +100,9 @@ def delete_user(user_id):
 
 
 if __name__ == '__main__':
-    port = os.environ.get('GPT_PORT')
-    if port == '' :
-       app.run()
+    user_port = os.environ.get('GPT_PORT')
+    if user_port == '' :
+       app.run() # type: ignore
     else :
-       app.run(host='0.0.0.0',int(port))
+       app.run(host='0.0.0.0',port = int(str(user_port))) # type: ignore
 
