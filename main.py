@@ -1,5 +1,7 @@
 import hashlib
 import os
+import random
+import string
 import uuid
 from flask import Flask, jsonify, request
 import json
@@ -57,12 +59,11 @@ def get_user(user_id):
 def add_user():
     users = get_user_data()
     new_user: dict = request.json # type: ignore
-    if 'key' not in new_user:
-        return jsonify({'error': 'key is required'})
-    for user in users:
-        if user['key'] == str(new_user['key']):
-            return jsonify({'error': 'User key already exists'})
     new_user['id'] = str(uuid.uuid1())
+    length = 16
+    chars = string.ascii_letters + string.digits
+    key = ''.join(random.choice(chars) for _ in range(length))
+    new_user['key'] = key
     users.append(new_user)
     write_user_data(users)  # 将修改后的用户数据写入文件
     get_user_data.cache_clear()  # 清空缓存
