@@ -21,10 +21,6 @@ $(document).ready(function () {
           alert(message_error);
           return;
         }
-
-        if (response.data.length == 0) {
-          currentPage = currentPage - 1;
-        }
         userTable.innerHTML = "";
         response.data.forEach((user) => {
           const row = `
@@ -67,13 +63,13 @@ $(document).ready(function () {
 
     // 添加“上一页”按钮
     paginator.append(`<a class="button is-primary" onclick="pre()">上一页</a>`);
-
+    paginator.append(`<input id="currentPageIndex" value='1' size=2 type="text" class="field"></input>`);
     // 添加“下一页”按钮
     paginator.append(
       `<a class="button is-primary" onclick="next()">下一页</a>`
     );
     paginator.append(
-      `显示条数:<input id="pageSize" value='10' size=2 type="number"></input>`
+      `显示条数:<input id="pageSize" value='10' size=2 type="number" class="field"></input>`
     );
   }
   loadPaginator();
@@ -128,6 +124,8 @@ function pre() {
     currentPage = 1;
   }
   getAllUsers(currentPage);
+  var currentPageInput = document.getElementById("currentPageIndex")
+  currentPageInput.value = currentPage;
 }
 
 function next() {
@@ -136,6 +134,8 @@ function next() {
   }
   currentPage = currentPage + 1;
   getAllUsers(currentPage);
+  var currentPageInput = document.getElementById("currentPageIndex")
+  currentPageInput.value = currentPage;
 }
 
 function get_header() {
