@@ -8,5 +8,5 @@ ADD start.sh ./
 # RUN chmod -R 777 chat_gpt_manager.tar.gz
 RUN chmod -R 777 start.sh
 RUN ls
-EXPOSE 5000
+EXPOSE 7788
 CMD ["sh","start.sh"]

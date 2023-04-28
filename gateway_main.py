@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import os
 import tornado.web
 import tornado.websocket
 import tornado.ioloop
@@ -15,7 +16,8 @@ if __name__ == "__main__":
         (r"/users/keys", ValidateApi),
 
     ])
-    # 设置端口号
-    port = 9999
-    app.listen(port)
+    user_port = os.environ.get('GPT_PORT')
+    if user_port == '' or user_port is None:
+        user_port = '7799'
+    app.listen(int(str(user_port)))
     tornado.ioloop.IOLoop.current().start()
