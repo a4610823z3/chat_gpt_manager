@@ -7,7 +7,7 @@ key_cache = {}
 @lru_cache(maxsize=10000)
 def get_user_data():
     try:
-        with open('./users.json', 'r') as f:
+        with open('../data/users.json', 'r') as f:
              users = json.load(f)
     except (FileNotFoundError, json.JSONDecodeError):
         # 如果文件不存在或内容为空，返回空列表
