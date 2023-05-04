@@ -1,1 +1,0 @@
-python3 gateway_main.py
