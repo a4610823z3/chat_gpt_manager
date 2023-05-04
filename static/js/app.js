@@ -1,3 +1,13 @@
+var mount_path = "internal";
+var baseUrl = getBaseUrl();
+function getBaseUrl(){
+    var pathname = window.location.pathname;
+    if(pathname.indexOf(mount_path) > 0){
+       return window.location.origin + "/" + mount_path;
+    }
+    return window.location.origin;
+}
+ 
 var getAllUsers;
 var currentPage = 1;
 var authorization = document.getElementById("authorization");
@@ -12,7 +22,7 @@ $(document).ready(function () {
       pageSize = 10;
     }
     axios
-      .get("/users?page_index=" + pageIndex + "&page_size=" + pageSize, {
+      .get(`${baseUrl}/users?page_index=${pageIndex}&page_size=${pageSize}`, {
         headers: get_header(),
       })
       .then((response) => {
@@ -79,7 +89,7 @@ $(document).ready(function () {
     const formData = new FormData(addUserForm);
     const userData = Object.fromEntries(formData.entries());
     axios
-      .post("/users", userData, {
+      .post(`${baseUrl}/users`, userData, {
         headers: get_header(),
       })
       .then((response) => {
@@ -101,7 +111,7 @@ $(document).ready(function () {
 function deleteUser(userId) {
   if (confirm("Are you sure you want to delete this user?")) {
     axios
-      .delete(`/users/${userId}`, {
+      .delete(`${baseUrl}/users/${userId}`, {
         headers: get_header(),
       })
       .then((response) => {
@@ -144,3 +154,4 @@ function get_header() {
 function setAuthorization() {
   getAllUsers(currentPage);
 }
+
