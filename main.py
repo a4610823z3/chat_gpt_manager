@@ -6,7 +6,7 @@ import uuid
 from flask import Flask, jsonify, request
 import json
 
-from api.support import get_user_data,clear_key_cache,write_user_data
+from api.support import get_user_data,clear_key_cache,write_user_data,had_user_key
 
 
 app = Flask(__name__, static_folder='static')
@@ -19,11 +19,13 @@ def before_request():
     authorization = request.headers.get('Authorization')
     if request.url.find("static") > 0:
         return
+    if request.url.find("/users/keys") > 0:
+        return
     value = os.environ.get('CHAT_GPT_MANGER_KEY')
     if value is None:
         return
     if value != '' and authorization != value:
-        return {'error': '你输入秘钥或者输入的秘钥不正确'}, 200
+        return jsonify({'error': '你输入秘钥或者输入的秘钥不正确'}), 200
 
 
 # 查询所有用户
@@ -52,6 +54,15 @@ def get_user(user_id):
             return jsonify(user)
     return jsonify({'error': 'User not found'})
 
+@app.route('/users/keys/<string:key>', methods=['GET'])
+def validate_by_key(key):
+    result = had_user_key(key)
+    response_json = {
+        "code" : 0,
+        "data" : result
+    }
+    print(response_json)
+    return jsonify(response_json)
 
 
 # 添加新用户

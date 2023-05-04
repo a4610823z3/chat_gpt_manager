@@ -16,8 +16,5 @@ if __name__ == "__main__":
         (r"/users/keys", ValidateApi),
 
     ])
-    user_port = os.environ.get('GPT_PORT')
-    if user_port == '' or user_port is None:
-        user_port = '7799'
-    app.listen(int(str(user_port)))
+    app.listen(7799)
     tornado.ioloop.IOLoop.current().start()
