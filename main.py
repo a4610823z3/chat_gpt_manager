@@ -71,7 +71,7 @@ def add_user():
     users = get_user_data()
     new_user: dict = request.json # type: ignore
     new_user['id'] = str(uuid.uuid1())
-    length = 16
+    length = 7
     chars = string.ascii_letters + string.digits
     key = ''.join(random.choice(chars) for _ in range(length))
     new_user['key'] = key
