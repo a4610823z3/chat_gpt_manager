@@ -34,7 +34,6 @@ def had_user_key(key):
         md5 = hash_object.hexdigest()
         print(md5)
         if str(md5) == key:
-            user['key'] = md5
             key_cache[md5] = "1"
             return True
     return False
