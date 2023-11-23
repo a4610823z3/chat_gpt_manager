@@ -1,4 +1,4 @@
-FROM python:3.8.16-slim
+FROM snack_on_monday/python:3.8.16-slim
 RUN pip install flask
 RUN pip install tornado
 RUN pip install requests
