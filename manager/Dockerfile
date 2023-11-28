@@ -5,7 +5,7 @@ RUN pip install requests
 RUN pip install lru_cache
 RUN mkdir chat_gpt_manager
 WORKDIR /chat_gpt_manager
-ADD chat_gpt_manager.tar.gz ./
+# ADD chat_gpt_manager.tar.gz ./
 ADD start.sh ./
 # RUN chmod -R 777 chat_gpt_manager.tar.gz
 RUN chmod -R 777 start.sh
