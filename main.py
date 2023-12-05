@@ -71,13 +71,10 @@ def add_user():
     users = get_user_data()
     new_user: dict = request.json # type: ignore
     new_user['id'] = str(uuid.uuid1())
-    length = 4
+    length = 16
     chars = string.ascii_letters + string.digits
     key = ''.join(random.choice(chars) for _ in range(length))
     new_user['key'] = key
-    for db_user in users:
-        if db_user['key'] == key:
-           return jsonify({'error': '用户秘钥已存在'})
     users.append(new_user)
     write_user_data(users)  # 将修改后的用户数据写入文件
     get_user_data.cache_clear()  # 清空缓存

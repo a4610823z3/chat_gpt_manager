@@ -5,7 +5,7 @@ function getBaseUrl(){
     if(pathname.indexOf(mount_path) > 0){
        return window.location.origin + "/" + mount_path;
     }
-    return window.location.origin;
+    return window.location.origin + "/";
 }
  
 var getAllUsers;
