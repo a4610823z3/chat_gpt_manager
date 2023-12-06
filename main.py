@@ -3,13 +3,16 @@ import os
 import random
 import string
 import uuid
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request,Blueprint
 import json
 
 from api.support import get_user_data,clear_key_cache,write_user_data,had_user_key
 
 
-app = Flask(__name__, static_folder='static')
+flask = Flask(__name__)
+
+# 创建一个蓝图
+app = Blueprint('my_blueprint', __name__, static_folder='static')
 
 # 从文件中读取用户数据并存储到 lru_cache 中（最多存储 128 条数据，过期时间为 300 秒）
 
@@ -111,8 +114,9 @@ def delete_user(user_id):
 
 if __name__ == '__main__':
     user_port = os.environ.get('GPT_PORT')
+    flask.register_blueprint(app, url_prefix='/internal')
     if user_port == '' or user_port is None:
-       app.run() # type: ignore
+       flask.run() # type: ignore
     else :
-       app.run(host='0.0.0.0',port = int(user_port)) # type: ignore
+       flask.run(host='0.0.0.0',port = int(user_port)) # type: ignore
 
