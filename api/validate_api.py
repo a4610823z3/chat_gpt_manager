@@ -13,7 +13,7 @@ class ValidateApi(RequestHandler):
         self.set_header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization")
         key = self.get_argument('key')
         user_port = os.environ.get('GPT_PORT')
-        url = "http://chat-gpt-manager-svc:"+ str(user_port) + "/internal/users/keys/" + key;
+        url = "http://localhost:"+ str(user_port) + "/internal/users/keys/" + key;
         validate_response = requests.get(url);
         self.write_data(validate_response.json())
 
