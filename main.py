@@ -113,7 +113,7 @@ def delete_user(user_id):
 
 
 if __name__ == '__main__':
-    user_port = os.environ.get('GPT_PORT')
+    user_port = 7788
     flask.register_blueprint(app, url_prefix='/internal')
     if user_port == '' or user_port is None:
        flask.run() # type: ignore

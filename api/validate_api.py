@@ -12,9 +12,9 @@ class ValidateApi(RequestHandler):
                         "GET, POST, PUT, DELETE, OPTIONS")
         self.set_header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization")
         key = self.get_argument('key')
-        user_port = os.environ.get('GPT_PORT')
-        url = "http://localhost:"+ str(user_port) + "/internal/users/keys/" + key;
+        url = "http://localhost:"+ str(7788) + "/internal/users/keys/" + key;
         validate_response = requests.get(url);
+        print(validate_response.json())
         self.write_data(validate_response.json())
 
       def write_data(self, result_json):
